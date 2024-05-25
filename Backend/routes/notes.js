@@ -15,8 +15,6 @@ router.get('/fetchnotes', fetchuser, async (req, res) => {       //using fecth u
         console.error(error.message);
         res.status(500).send("Some Error occured,Please try again after some time");
     }
-
-
 })
 
 
@@ -81,7 +79,7 @@ router.delete('/deletenote/:id', fetchuser,
             }
             note = await Note.findByIdAndDelete(req.params.id)
             res.json({ "Success": "Note has been successfully deleted" });
-        } catch (error) {
+        } catch (error){
             console.error(error.message);
             res.status(500).send("Some Error occured,Please try again after some time");
         }

@@ -1,0 +1,66 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.heading {
+    height: 400px ;
+}
+
+/* Navbar Styles */
+.navbar {
+    padding: 20px 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+}
+
+/* Hero Section Styles */
+.hero-section {
+    background-image:url('../public/images/about.jpg');
+    background-size:cover;
+    color:gray;
+    padding: 100px 0;
+    background-position:  center;
+    
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+}
+
+/* Features Section Styles */
+.features-section {
+    padding: 100px 0;
+}
+
+.feature {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.feature h3 {
+    font-size: 2.5rem;
+}
+
+.feature p {
+    font-size: 1.2rem;
+}
+
+/* Footer Styles */
+.footer-section {
+    padding: 20px 0;
+}

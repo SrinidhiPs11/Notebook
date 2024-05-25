@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { AlertContext } from '../context/NoteContext';
+import { AlertContext } from '../context/CreateContext';
 const Signup = () => {
   
   const context = useContext(AlertContext);
@@ -20,7 +20,7 @@ const Signup = () => {
       const json = await response.json();
 
       if (json.signedup) {
-        //localStorage.setItem('token',json.token);
+        localStorage.setItem('token',json.token);
         navigate("/", { replace: true });
         showAlert("Signed up Successfully", "success")
 
@@ -32,6 +32,10 @@ const Signup = () => {
         showAlert("Passwords don't match.", "danger")
       
     }
+  }
+  const onClickLogin = () => {
+    navigate("/login", { replace: true });
+
   }
 
   const onChange = (e) => {
@@ -52,7 +56,7 @@ const Signup = () => {
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" onChange={onChange} name="password" id="password" minLength={5} required />
-          <label htmlFor="password" className="form-label fw-light fs-6">Must be 8-20 characters long</label>
+          <label htmlFor="password" className="form-label fw-light fs-6">Must be atleast 5 characters long</label>
         </div>
         <div className="mb-3">
           <label htmlFor="cpassword" className="form-label">Confirm Password</label>
@@ -60,6 +64,7 @@ const Signup = () => {
         </div>
         <button type="submit" className="btn btn-primary">Sign Up</button>
       </form>
+      <p className="my-3">Already have an account?<button type='button' className="btn btn-outline-primary mx-1" onClick={onClickLogin}>Login</button></p>
     </div>
   )
 }

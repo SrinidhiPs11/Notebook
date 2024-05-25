@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import {NoteContext} from '../context/NoteContext'
-import { AlertContext } from '../context/NoteContext';
+import {NoteContext} from '../context/CreateContext'
+import { AlertContext } from '../context/CreateContext';
 
 const AddNote = () => {
     const context1 = useContext(AlertContext);
@@ -19,15 +19,13 @@ const AddNote = () => {
     }
     const onChange = (e)=>{
         setNote({...note, [e.target.name]: e.target.value})
-        
-        
     }
     
     return (
 
         <div className='container my-3'>
             <h1>Write a Note</h1>
-            <form  class="form-floating mb-3">
+            <form  className="form-floating mb-3">
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>
                     <input type="text" className="form-control" id="title" name="title" value = {note.title} onChange={onChange}/>

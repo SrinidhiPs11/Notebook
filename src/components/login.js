@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
-import { useNavigate } from "react-router-dom";
-import { AlertContext } from '../context/NoteContext';
+import { Route, useNavigate } from "react-router-dom";
+import { AlertContext } from '../context/CreateContext';
 
 const Login = () => {
     const context = useContext(AlertContext);
     const { showAlert } = context;
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ email: "", password: "" })
+    const [credentials, setCredentials] = useState({ email: "", password: "" });
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -22,16 +22,18 @@ const Login = () => {
             localStorage.setItem('token', json.token);
             navigate("/", { replace: true });
             showAlert("Signed up Successfully", "success")
-
         } else {
             showAlert(json.error, "danger")
         }
     }
-
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
+    const onClickSignup = (e) => {
+        navigate("/signup", { replace: true });
+    }
     return (
+        <>
         <div className="container" >
             <h1 className="my-4" >Login</h1>
             <form onSubmit={handleSubmit}>
@@ -44,9 +46,10 @@ const Login = () => {
                     <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={credentials.email.length < 1 || credentials.password.length < 1} >Login</button>
-
+                <p className="my-3">Don't have an account?<button type='button' className="btn btn-outline-primary mx-1" onClick={onClickSignup}>Sign up</button> today for free!!</p>
             </form>
         </div>
+        </>
     )
 }
 

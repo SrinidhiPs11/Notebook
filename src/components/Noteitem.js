@@ -8,8 +8,9 @@ const Noteitem = (props) => {
     }
     return (
         //<div className="col-md-5">
+        // <div className="container flex col-4">
         <div className="container">
-            <div className="card my-2">
+            <div className="card my-3">
                 <div className="card-body">
                     <h5 className="card-title">Title : {capitalize(note.title)}</h5>
                     <p className="card-text">Description : {capitalize(note.description)}</p>

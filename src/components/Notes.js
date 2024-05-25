@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { NoteContext, AlertContext } from '../context/NoteContext';
+import { NoteContext, AlertContext } from '../context/CreateContext';
 import Noteitem from './Noteitem';
 import AddNote from './AddNote';
 import { useNavigate } from 'react-router';
@@ -8,17 +8,9 @@ const Notes = () => {
     const context1 = useContext(AlertContext);
     const { showAlert } = context1;
     const context = useContext(NoteContext);
-    const { notes, getNotes, editNote, deleteNote } = context;
+    const { notes, setNotes, getNotes, editNote, deleteNote } = context;
     const navigate = useNavigate();
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            getNotes()
-        }
-        else {
-            navigate("/login");
-        }
-        // eslint-disable-next-line
-    }, [])
+    
     const ref = useRef(null)
     const refClose = useRef(null)
     const ref2 = useRef(null)
@@ -26,6 +18,23 @@ const Notes = () => {
     const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
     const [title, settitle] = useState("")
     const [noteid, curNoteid] = useState()
+    const [sort,setSort] = useState("Latest")
+    
+    
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            getNotes(sort);
+        }
+        else {
+            navigate("/login");
+        }
+    },[notes,sort])
+
+
+    useEffect(() => {
+        setSort(localStorage.getItem("order"));
+    },[]);
+
 
     const updateNote = (currentNote) => {
         ref.current.click();
@@ -38,7 +47,7 @@ const Notes = () => {
     }
 
 
-    const handleClickedit = (e) => {
+    const handleUpdatenote = (e) => {
 
         editNote(note.id, note.etitle, note.edescription, note.etag);
         showAlert("Note Edited Successfullly", "success")
@@ -50,15 +59,20 @@ const Notes = () => {
         deleteNote(noteid)
         showAlert("Note Edited Successfullly", "success")
         refClose2.current.click();
-
-
     }
 
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })
     }
 
+    const sortNotes = (e) => {
+        localStorage.setItem("order", e.target.id)
+        setSort(e.target.id)
+    }
+
+
     return (
+
         <>
             <AddNote />
             <div className="container">
@@ -93,7 +107,7 @@ const Notes = () => {
                             </div>
                             <div className="modal-footer">
                                 <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button onClick={handleClickedit} type="button" className="btn btn-primary" disabled={note.etitle.length < 3 || note.edescription.length < 10}>Update Note</button>
+                                <button onClick={handleUpdatenote} type="button" className="btn btn-primary" disabled={note.etitle.length < 3 || note.edescription.length < 10}>Update Note</button>
                             </div>
                         </div>
                     </div>
@@ -104,7 +118,7 @@ const Notes = () => {
                 </button>
 
 
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -122,20 +136,26 @@ const Notes = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="row my-3">
-                    <h2>Your Notes</h2>
-                    <div className='container'>
-                        {notes.length === 0 && 'Add notes to display them here'}
+                    {notes.length != 0 && <div className="row my-3"><h2>Your Notes</h2>
+                    <div className="d-flex flex-row-reverse">
+                        <div className="btn-group">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort Notes: {sort}</button>
+                            <ul className="dropdown-menu">
+                                <li role="button" className='dropdown-item' id = "Latest" onClick={sortNotes}>Latest</li>
+                                <li role="button" className='dropdown-item' id = "Oldest" onClick={sortNotes}>Oldest</li>
+                            </ul>
+                        </div>  
                     </div>
-                    {notes.map((note) => {
+                    </div>}
+                    <div className='container'>  
+                    </div>
+                        {notes.map((note) => {
                         return <Noteitem key={note._id} updateNote={updateNote} deletecurnote={deletecurnote} note={note} />
                     })}
                 </div>
-            </div>
-
         </>
     )
 }
+
 
 export default Notes

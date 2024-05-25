@@ -1,13 +1,15 @@
 import { useState } from "react";
-import {NoteContext} from "./NoteContext";
+import {NoteContext} from "./CreateContext";
 
 const NoteState = (props) => {
   const notesInitial = []
   const [notes, setNotes] = useState(notesInitial)
   const host = "http://localhost:5000";
 
+
+
   //function to fetch notes
-  const getNotes = async () => {
+  const getNotes = async (order) => {
     //api call for fetching notes
     const response = await fetch(`http://localhost:5000/api/notes/fetchnotes`, {
       method: "GET",
@@ -17,8 +19,11 @@ const NoteState = (props) => {
       }
     });
     const json1 = await response.json()
-    setNotes(json1)
-    
+    if(order === 'Oldest'){
+      setNotes(json1)
+    }else{
+      setNotes(json1.reverse())
+    }
   }
 
   const addNote = async (title, description, tag) => {
@@ -34,7 +39,6 @@ const NoteState = (props) => {
     });
     const note = await response.json()
     setNotes(notes.concat(note))
-
   }
   const deleteNote = async (id) => {
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
@@ -76,7 +80,7 @@ const NoteState = (props) => {
     setNotes(newNotes);
   }
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
+    <NoteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}>
       {props.children}
     </NoteContext.Provider>
   )
