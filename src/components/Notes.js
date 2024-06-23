@@ -19,6 +19,8 @@ const Notes = () => {
     const [title, settitle] = useState("")
     const [noteid, curNoteid] = useState()
     const [sort,setSort] = useState("Latest")
+    const [view, SetView] = useState("List")
+
     
     
     useEffect(() => {
@@ -33,6 +35,7 @@ const Notes = () => {
 
     useEffect(() => {
         setSort(localStorage.getItem("order"));
+        SetView(localStorage.getItem("view"));
     },[]);
 
 
@@ -57,7 +60,7 @@ const Notes = () => {
     }
     const handleClickdelete = () => {
         deleteNote(noteid)
-        showAlert("Note Edited Successfullly", "success")
+        showAlert("Note Deleted Successfullly", "success")
         refClose2.current.click();
     }
 
@@ -68,6 +71,10 @@ const Notes = () => {
     const sortNotes = (e) => {
         localStorage.setItem("order", e.target.id)
         setSort(e.target.id)
+    }
+    const changeView = (e) => {
+        localStorage.setItem("view", e.target.id)
+        SetView(e.target.id)
     }
 
 
@@ -127,7 +134,7 @@ const Notes = () => {
                             </div>
                             <div className="modal-body" name="curtitle">
                                 Are you sure you want to delete this note<br></br>
-                                <strong>Title</strong> - {title}
+                                <strong>Title</strong> - {title.slice(0,40)+"..."}
                             </div>
                             <div className="modal-footer">
                                 <button ref={refClose2} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -138,21 +145,25 @@ const Notes = () => {
                 </div>
                     {notes.length != 0 && <div className="row my-3"><h2>Your Notes</h2>
                     <div className="d-flex flex-row-reverse">
-                        <div className="btn-group">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort Notes: {sort}</button>
+                        <button className="btn btn-primary dropdown-toggle mx-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort Notes: {sort}</button>
+                        <button className= {`btn btn-outline-primary ${ view === 'Grid' ? "active" : ""} fa-solid fa-grip-vertical px-3`}  id = "Grid" onClick = {changeView} type="button"></button>
+                        <button className= {`btn btn-outline-primary ${ view === 'List' ? "active" : ""} fa-solid fa-list mx-3`}  id = "List" onClick = {changeView} type="button"></button>
                             <ul className="dropdown-menu">
                                 <li role="button" className='dropdown-item' id = "Latest" onClick={sortNotes}>Latest</li>
                                 <li role="button" className='dropdown-item' id = "Oldest" onClick={sortNotes}>Oldest</li>
                             </ul>
-                        </div>  
                     </div>
                     </div>}
-                    <div className='container'>  
-                    </div>
+                        
+                    <div className={`${ view === 'Grid' ? "row row-cols-3" : "col"}`}>
                         {notes.map((note) => {
-                        return <Noteitem key={note._id} updateNote={updateNote} deletecurnote={deletecurnote} note={note} />
-                    })}
+                            return <Noteitem key={note._id} updateNote={updateNote} deletecurnote={deletecurnote} note={note} view ={view}/>
+                        })}
+                    </div>         
+                              
+                
                 </div>
+                
         </>
     )
 }

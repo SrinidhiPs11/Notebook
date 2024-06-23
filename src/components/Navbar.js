@@ -4,18 +4,21 @@ import {
   } from "react-router-dom";
 
 const Navbar = () => {
+
   const handleLogout = ()=>{
     localStorage.removeItem('token');
     window.location.reload();
   }
   let location = useLocation();
+
+
   return (
     <>
     <nav className="navbar nav-underline navbar-expand-lg bg-body-tertiary sticky-top">
   <div className="container-fluid">
   <Link className="navbar-brand" to="/">
  <img src="images/notebook_logo.png" alt="NoteBook logo" width="60" height="40"/>
-</Link>
+</Link>         
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>

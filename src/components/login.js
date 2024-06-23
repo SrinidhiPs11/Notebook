@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Route, useNavigate } from "react-router-dom";
 import { AlertContext } from '../context/CreateContext';
+import Navbar from './Navbar';
 
 const Login = () => {
     const context = useContext(AlertContext);
@@ -34,6 +35,7 @@ const Login = () => {
     }
     return (
         <>
+        <Navbar/>
         <div className="container" >
             <h1 className="my-4" >Login</h1>
             <form onSubmit={handleSubmit}>

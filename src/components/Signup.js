@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { AlertContext } from '../context/CreateContext';
+import Navbar from './Navbar';
 const Signup = () => {
   
   const context = useContext(AlertContext);
@@ -35,13 +36,14 @@ const Signup = () => {
   }
   const onClickLogin = () => {
     navigate("/login", { replace: true });
-
   }
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
   return (
+    <>
+    <Navbar/>
     <div className='container'>
       <h1 className="my-4" >Sign Up</h1>
       <form onSubmit={handleSubmit}>
@@ -66,6 +68,7 @@ const Signup = () => {
       </form>
       <p className="my-3">Already have an account?<button type='button' className="btn btn-outline-primary mx-1" onClick={onClickLogin}>Login</button></p>
     </div>
+    </>
   )
 }
 

@@ -5,7 +5,6 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Navbar from './components/Navbar';
 import Home from './components/home';
 import About from './components/about';
 import NoteState from "./context/NotesState";
@@ -13,6 +12,7 @@ import AlertProvider from "./context/AlertContext";
 import Signup from "./components/Signup";
 import Login from "./components/login";
 import Alert from "./components/Alert";
+import NotFound from "./components/NotFound";
 
 function App() {
 
@@ -21,14 +21,14 @@ function App() {
       <Router>
         <AlertProvider>
         <NoteState>
-          <Navbar></Navbar>
-          <Alert/>
           <Routes>
             <Route exact path="/" Component={Home} />
             <Route exact path="/about" Component={About} />
             <Route exact path="/login" Component={Login} />
             <Route exact path="/signup" Component={Signup} />
-          </Routes>
+            <Route path="*" Component={NotFound} /> 
+            </Routes>
+          <Alert/>
         </NoteState>
         </AlertProvider>
       </Router >

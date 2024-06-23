@@ -7,23 +7,17 @@ const Noteitem = (props) => {
         return lower.charAt(0).toUpperCase() + lower.slice(1);
     }
     return (
-        //<div className="col-md-5">
-        // <div className="container flex col-4">
-        <div className="container">
-            <div className="card my-3">
+        <div className="col">
+            <div className="card mb-3 mt-1">
                 <div className="card-body">
                     <h5 className="card-title">Title : {capitalize(note.title)}</h5>
                     <p className="card-text">Description : {capitalize(note.description)}</p>
                     <p className="card-text">Tag : {note.tag === "" ? "General" : note.tag}</p>
                     <i className="fa-solid fa-pen-to-square" onClick={() => { updateNote(note) }}></i>
                     <i className="far fa-trash-alt mx-4" onClick={()=>{ deletecurnote(note)}}></i>
-                </div>
-                
+                    </div>
         </div>
-        </div>
-
-
-
+    </div> 
     )
 }
 

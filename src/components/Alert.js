@@ -5,7 +5,7 @@ function Alert() {
     const { alert} = context;
     return (
         <div className="container"style={{height: '60px'}}>
-        {alert && <div id="alert" className={`alert alert-${alert.type} alert-dismissible fade show fixed-top `} role="alert">
+        {alert && <div id="alert" className={` alert alert-${alert.type} alert-dismissible fade show fixed-top text-center `} role="alert">
         {alert.msg} 
         </div>}
         </div>

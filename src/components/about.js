@@ -1,10 +1,12 @@
 import React from 'react'
 import "../about.css"
 import { Link } from 'react-router-dom'
+import Navbar from './Navbar'
 const About = () => {
 
     return (
         <>
+        <Navbar/>
             <section id="hero" className="hero-section">
                 <div className="container text-center">
                     <div className='heading'>
