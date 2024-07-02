@@ -4,7 +4,7 @@ function Alert() {
     const context = useContext(AlertContext);
     const { alert} = context;
     return (
-        <div className="container"style={{height: '60px'}}>
+        <div>
         {alert && <div id="alert" className={` alert alert-${alert.type} alert-dismissible fade show fixed-top text-center `} role="alert">
         {alert.msg} 
         </div>}
